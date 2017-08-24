@@ -4,7 +4,7 @@ Donate link: http://www.erinmorelli.com/projects/em-beer-manager/
 Tags: beer, beers, brewery, untappd, untappd for business
 Requires at least: 3.0.1
 Tested up to: 4.8.0
-Stable tag: 3.1.0
+Stable tag: 3.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -277,6 +277,8 @@ Try refreshing your permalinks by going to "Settings" -> "Permalinks" and clicki
 
 
 == Changelog ==
+= 3.1.1 =
+* [NEW] Change the default slugs for the plugin post type, group, style, and menu
 
 = 3.1.0 =
 * [NEW] Connect to and import beers/menus from your Untappd for Business account

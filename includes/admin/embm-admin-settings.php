@@ -87,9 +87,15 @@ function EMBM_Admin_settings()
         add_settings_field('embm_untappd_settings', __('Untappd Settings', 'embm'), 'EMBM_Admin_Settings_Untappd_login', 'embm', 'embm_global_settings');
     }
 
+    //  Slug Settings
+    add_settings_section('embm_slug_settings', __('Slug Settings', 'embm'), 'EMBM_Admin_Settings_section', 'embm');
+    add_settings_field('embm_post_type_slug', __('Custom Base Slug', 'embm'), 'EMBM_Admin_Settings_Base_slug', 'embm', 'embm_slug_settings', array('label_for' => 'embm_post_type_slug'));
+    add_settings_field('embm_style_slug', __('Custom Style Slug', 'embm'), 'EMBM_Admin_Settings_Style_slug', 'embm', 'embm_slug_settings', array('label_for' => 'embm_style_slug'));
+    add_settings_field('embm_group_slug', __('Custom Group Slug', 'embm'), 'EMBM_Admin_Settings_Group_slug', 'embm', 'embm_slug_settings', array('label_for' => 'embm_group_slug'));
+    add_settings_field('embm_menu_slug', __('Custom Menu Slug', 'embm'), 'EMBM_Admin_Settings_Menu_slug', 'embm', 'embm_slug_settings', array('label_for' => 'embm_menu_slug'));
+
     // Group Tax Settings
     add_settings_section('embm_group_settings', __('Beer Group Settings', 'embm'), 'EMBM_Admin_Settings_section', 'embm');
-    add_settings_field('embm_group_slug', __('Custom Taxonomy Slug', 'embm'), 'EMBM_Admin_Settings_Group_slug', 'embm', 'embm_group_settings', array('label_for' => 'embm_group_slug'));
     add_settings_field('embm_group_display_settings', __('Display Settings', 'embm'), 'EMBM_Admin_Settings_Group_display', 'embm', 'embm_group_settings');
     if ($logged_in) {
         add_settings_field('embm_group_untappd_settings', __('Untappd Settings', 'embm'), 'EMBM_Admin_Settings_Group_untappd', 'embm', 'embm_group_settings');
@@ -357,6 +363,46 @@ function EMBM_Admin_Settings_Global_untappd()
 }
 
 /**
+ * Outputs custom post type slug option
+ *
+ * @return void
+ */
+function EMBM_Admin_Settings_Base_slug()
+{
+    $options = get_option('embm_options');
+
+    echo '<p><input id="embm_post_type_slug" name="embm_options[embm_post_type_slug]" size="15" type="text" value="';
+    echo sanitize_key($options['embm_post_type_slug']);
+    echo '" /></p><p class="description">';
+    echo __('Rename the beer post URLs with your own custom slug name.', 'embm') . '<br />';
+    echo sprintf(
+        __('You must %s after changing this.', 'embm'),
+        sprintf('<a href="options-permalink.php">%s</a>', __('refresh your permalinks', 'embm'))
+    ).'</p><p class="timezone-info">';
+    echo __('By default URLs will look like', 'embm').': <code>yoursite.com/<strong>base</strong>/your-post-name</code>.</p>';
+}
+
+/**
+ * Outputs custom style slug option
+ *
+ * @return void
+ */
+function EMBM_Admin_Settings_Style_slug()
+{
+    $options = get_option('embm_options');
+
+    echo '<p><input id="embm_style_slug" name="embm_options[embm_style_slug]" size="15" type="text" value="';
+    echo sanitize_key($options['embm_style_slug']);
+    echo '" /></p><p class="description">';
+    echo __('Rename the beer style URLs with your own custom slug name.', 'embm') . '<br />';
+    echo sprintf(
+        __('You must %s after changing this.', 'embm'),
+        sprintf('<a href="options-permalink.php">%s</a>', __('refresh your permalinks', 'embm'))
+    ).'</p><p class="timezone-info">';
+    echo __('By default URLs will look like', 'embm').': <code>yoursite.com/base/<strong>style</strong>/your-style-name</code>.</p>';
+}
+
+/**
  * Outputs custom group slug option
  *
  * @return void
@@ -373,7 +419,27 @@ function EMBM_Admin_Settings_Group_slug()
         __('You must %s after changing this.', 'embm'),
         sprintf('<a href="options-permalink.php">%s</a>', __('refresh your permalinks', 'embm'))
     ).'</p><p class="timezone-info">';
-    echo __('By default URLs will look like', 'embm').': <code>yoursite.com/<strong>group</strong>/your-group-name</code>.</p>';
+    echo __('By default URLs will look like', 'embm').': <code>yoursite.com/base/<strong>group</strong>/your-group-name</code>.</p>';
+}
+
+/**
+ * Outputs custom menu slug option
+ *
+ * @return void
+ */
+function EMBM_Admin_Settings_Menu_slug()
+{
+    $options = get_option('embm_options');
+
+    echo '<p><input id="embm_menu_slug" name="embm_options[embm_menu_slug]" size="15" type="text" value="';
+    echo sanitize_key($options['embm_menu_slug']);
+    echo '" /></p><p class="description">';
+    echo __('Rename the beer menu URLs with your own custom slug name.', 'embm') . '<br />';
+    echo sprintf(
+        __('You must %s after changing this.', 'embm'),
+        sprintf('<a href="options-permalink.php">%s</a>', __('refresh your permalinks', 'embm'))
+    ).'</p><p class="timezone-info">';
+    echo __('By default URLs will look like', 'embm').': <code>yoursite.com/base/<strong>menu</strong>/your-menu-name</code>.</p>';
 }
 
 /**

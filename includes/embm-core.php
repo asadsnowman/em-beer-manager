@@ -39,9 +39,21 @@ function EMBM_Core_beer()
         'search_items'          => __('Search Beers', 'embm'),
         'not_found'             => __('No beers found', 'embm'),
         'not_found_in_trash'    => __('No beers found in the Trash', 'embm'),
-        'parent_ithwh_colon'    => '',
+        'parent_item_colon'    => '',
         'menu_name'             => __('Beers', 'embm')
     );
+
+    // Set default slug
+    $post_type_slug = 'beers';
+
+    // Override slug if user has custom option set
+    $options = get_option('embm_options');
+    if(isset($options['embm_post_type_slug'])) {
+        $str = sanitize_key($options['embm_post_type_slug']);
+        if (strlen($str) > 0) {
+            $post_type_slug = $str;
+        }
+    }
 
     // Set up custom post type options
     $args = array(
@@ -57,7 +69,7 @@ function EMBM_Core_beer()
         'rest_base'             => 'embm_beers',
         'rest_controller_class' => 'WP_REST_Posts_Controller',
         'rewrite'               => array(
-            'slug'              => __('beers', 'embm'),
+            'slug'              => __($post_type_slug, 'embm'),
             'with_front'        => false,
             'feeds'             => true,
             'pages'             => true
@@ -369,6 +381,30 @@ function EMBM_Core_styles()
         'menu_name'                     => __('Styles', 'embm')
     );
 
+    // Set default post type slug
+    $post_type_slug = 'beers';
+
+    // Override slug if user has custom option set
+    $options = get_option('embm_options');
+    if(isset($options['embm_post_type_slug'])) {
+        $str = sanitize_key($options['embm_post_type_slug']);
+        if (strlen($str) > 0) {
+            $post_type_slug = $str;
+        }
+    }
+
+    // Set default slug
+    $style_slug = $post_type_slug.'/style';
+
+    // Override slug if user has custom option set
+    $options = get_option('embm_options');
+    if (isset($options['embm_style_slug'])) {
+        $new_slug = sanitize_key($options['embm_style_slug']);
+        if(strlen($new_slug) > 0) {
+            $style_slug = $post_type_slug.'/'.$new_slug;
+        }
+    }
+
     // Set up custom taxonomy options
     $args = array(
         'hierarchical'          => false,
@@ -377,7 +413,7 @@ function EMBM_Core_styles()
         'show_admin_column'     => true,
         'query_var'             => true,
         'rewrite'               => array(
-            'slug'              => __('beers/style', 'embm'),
+            'slug'              => __($style_slug, 'embm'),
             'with_front'        => false
         ),
         'show_in_rest'          => true,
@@ -450,14 +486,27 @@ function EMBM_Core_group()
         'menu_name'                     => __('Groups', 'embm')
     );
 
-    // Set default slug
-    $group_slug = 'beer/group';
+    // Set default post type slug
+    $post_type_slug = 'beers';
 
     // Override slug if user has custom option set
     $options = get_option('embm_options');
+    if(isset($options['embm_post_type_slug'])) {
+        $str = sanitize_key($options['embm_post_type_slug']);
+        if (strlen($str) > 0) {
+            $post_type_slug = $str;
+        }
+    }
+
+    // Set default slug
+    $group_slug = $post_type_slug.'/group';
+
+    // Override slug if user has custom option set  
     if (isset($options['embm_group_slug'])) {
         $new_slug = sanitize_key($options['embm_group_slug']);
-        $group_slug = 'beer/'.$new_slug;
+        if(strlen($new_slug) > 0) {
+            $group_slug = $post_type_slug.'/'.$new_slug;
+        }
     }
 
     // Set up custom taxonomy options
@@ -468,7 +517,7 @@ function EMBM_Core_group()
         'show_admin_column'     => true,
         'query_var'             => true,
         'rewrite'               => array(
-            'slug'              => $group_slug,
+            'slug'              => __($group_slug, 'embm'),
             'with_front'        => false
         ),
         'show_in_rest'          => true,
@@ -507,6 +556,30 @@ function EMBM_Core_menu()
         'menu_name'                     => __('Menus', 'embm')
     );
 
+    // Set default post type slug
+    $post_type_slug = 'beers';
+
+    // Override slug if user has custom option set
+    $options = get_option('embm_options');
+    if(isset($options['embm_post_type_slug'])) {
+        $str = sanitize_key($options['embm_post_type_slug']);
+        if (strlen($str) > 0) {
+            $post_type_slug = $str;
+        }
+    }
+
+    // Set default slug
+    $menu_slug = $post_type_slug.'/'.'menu';
+
+    // Override slug if user has custom option set
+    $options = get_option('embm_options');
+    if (isset($options['embm_menu_slug'])) {
+        $new_slug = sanitize_key($options['embm_menu_slug']);
+        if(strlen($new_slug) > 0) {
+            $menu_slug = $post_type_slug.'/'.$new_slug;
+        }
+    }
+
     // Set up custom taxonomy options
     $args = array(
         'hierarchical'          => true,
@@ -515,7 +588,7 @@ function EMBM_Core_menu()
         'show_admin_column'     => true,
         'query_var'             => true,
         'rewrite'               => array(
-            'slug'              => 'beer/menu',
+            'slug'              => __($menu_slug, 'embm'),
             'with_front'        => false
         ),
         'show_in_rest'          => true,
